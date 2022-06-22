@@ -37,4 +37,16 @@ class UtilisateurManager
         $req->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Utilisateurs');
         return $req->fetch();
     }
+
+    public function update(Utilisateurs $utilisateur)
+    {
+        $req = $this->db->prepare('UPDATE poo.utilisateurs SET nom=:nom, prenom=:prenom, tel=:tel, email=:email WHERE id=:id');
+
+        $req->bindValue(':id', $utilisateur->getId(), PDO::PARAM_INT);
+        $req->bindValue(':nom', $utilisateur->getNom());
+        $req->bindValue(':prenom', $utilisateur->getPrenom());
+        $req->bindValue(':tel', $utilisateur->getTel());
+        $req->bindValue(':email', $utilisateur->getEmail());
+        $req->execute();
+    }
 }
